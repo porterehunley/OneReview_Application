@@ -1,12 +1,5 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import $ from 'jquery';
-import Popper from 'popper.js';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import React, { Component } from 'react';
 
-//Note that the class names and the elements it renders must be the same
 class Movie extends React.Component {
 	render() {
 		return (
@@ -24,10 +17,3 @@ class Movie extends React.Component {
 		);
 	}
 }
-
-
-//Render on the root div
-ReactDOM.render(
-	<app />,
-	document.getElementById('root')
-);
