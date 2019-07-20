@@ -62,8 +62,9 @@ class App extends Component {
 		return(
 			<div>
 				<Navbar />
-				
-				<Deck movies={movies}/>
+				<div className="cardContainer">
+					<Deck movies={movies}/>
+				</div>
 			
 			</div>
 		);

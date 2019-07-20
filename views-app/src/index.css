@@ -10,6 +10,13 @@
 .card {
 }
 
+.cardContainer {
+	padding-top: 30px;
+  	padding-right: 30px;
+  	padding-bottom: 30px;
+  	padding-left: 30px;
+}
+
 .card-deck {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
