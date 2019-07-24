@@ -3,6 +3,7 @@ package app
 import(
 	"net/http"
 	"fmt"
+	"os"
 )
 
 //TODO: Make this actaully authenticate users lmao
@@ -12,7 +13,7 @@ import(
 var JwtAuthentication = func(next http.Handler) http.HandlerFunc {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Sprintf("User looks good to me")
+		fmt.Fprintf(os.Stderr,"User looks good to me")
 		//Literally add any logic
 
 		next.ServeHTTP(w, r)
