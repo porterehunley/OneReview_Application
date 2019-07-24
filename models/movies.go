@@ -2,6 +2,8 @@ package models
 
 import (
 	//"encoding/json"
+	"golang.org/x/net/context"
+
 )
 //This contains information on the movies that we will be using 
 
@@ -22,6 +24,19 @@ func (movie *Movie) getScore() {
 
 func (movie *Movie) getDate() {
 	//TODO: This is where we will get the date of a movie 
+}
+
+func (movie *Movie) toKeyValue() (map[string]interface{}) {
+	return map[string]interface{} {
+		"title" : movie.Title, 
+		"score" : movie.Score,
+		"date" : movie.Date
+	}
+}
+
+//Not a pointer because we only care anout the data values
+func addToDatabase(movie Movie, client string) error {
+
 }
 
 

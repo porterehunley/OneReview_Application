@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"OneReview_Application/models"
+
 	"net/http"
 	"fmt"
 	"encoding/json"
@@ -20,4 +21,10 @@ func GetMovie(w http.ResponseWriter, r *http.Request, title string) {
 	data, _ := json.MarshalIndent(newMovie, "", "  ")
 
 	fmt.Fprintf(w,  "%s", data)
+}
+
+
+//TODO: Implement an actual post lmao
+func PostMovie(w http.ResponseWriter, r *http.Request) {
+
 }

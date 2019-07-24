@@ -39,16 +39,19 @@ func main() {
 	//NO! We're not going to use it
 	// router := mux.NewRouter()
 
+	//Create instance of firebase app
 	firebaseApp, err := utils.InitFirebaseApp()
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	//Create a new client 
 	client, err := firebaseApp.Firestore(context.Background())
 	if err != nil {
 		log.Fatalln(err)
 	}
 	defer client.Close()
+
 
 	http.HandleFunc("/api/", app.JwtAuthentication(MakeAPIHandler(controllers.GetMovie)))
 
