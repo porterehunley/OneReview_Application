@@ -27,5 +27,5 @@ func Respond(w http.ResponseWriter, data map[string]interface{}) error {
 	if err != nil {
 		return err
 	}
-
+	return nil
 }

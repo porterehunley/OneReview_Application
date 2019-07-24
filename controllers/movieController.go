@@ -16,6 +16,7 @@ func GetMovie(w http.ResponseWriter, r *http.Request, title string) {
 	newMovie.Date = "02/04/1999"
 
 	//For pretty print
+	//Parsing out JSON data is called "Marshaling"
 	data, _ := json.MarshalIndent(newMovie, "", "  ")
 
 	fmt.Fprintf(w,  "%s", data)

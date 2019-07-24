@@ -3,6 +3,8 @@ package main
 import (
 	"OneReview_Application/app"
 	"OneReview_Application/controllers"
+	"OneReview_Application/utils"
+	"golang.org/x/net/context"
 	// "fmt"
 	"net/http"
 	"regexp"
@@ -36,6 +38,17 @@ func main() {
 	//It routes every single request to the server though that's pretty nice
 	//NO! We're not going to use it
 	// router := mux.NewRouter()
+
+	firebaseApp, err := utils.InitFirebaseApp()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	client, err := firebaseApp.Firestore(context.Background())
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer client.Close()
 
 	http.HandleFunc("/api/", app.JwtAuthentication(MakeAPIHandler(controllers.GetMovie)))
 
