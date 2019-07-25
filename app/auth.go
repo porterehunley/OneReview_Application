@@ -13,7 +13,7 @@ import(
 var JwtAuthentication = func(next http.HandlerFunc) http.HandlerFunc {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(os.Stderr,"User looks good to me")
+		fmt.Fprintf(os.Stderr,"User looks good to me \n")
 		//Literally add any logic
 
 		next.ServeHTTP(w, r)
