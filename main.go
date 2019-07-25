@@ -3,8 +3,6 @@ package main
 import (
 	"OneReview_Application/app"
 	"OneReview_Application/controllers"
-	"OneReview_Application/utils"
-	"golang.org/x/net/context"
 	// "fmt"
 	"net/http"
 	"regexp"
@@ -18,9 +16,9 @@ var validAPIPath = regexp.MustCompile("^/(api)/([a-zA-Z0-9]+)$")
 //Some would say this limits the ammount of code used int eh handlers, as this is always the first step
 func MakeAPIHandler(fn func (http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-
 		//We're using a regular expression to make sure we aren't getting nafarious paths 
 		path := validAPIPath.FindStringSubmatch(r.URL.Path)
+
 		if path == nil {
 			http.NotFound(w, r)
 			return
@@ -28,8 +26,24 @@ func MakeAPIHandler(fn func (http.ResponseWriter, *http.Request, string)) http.H
 
 		fn(w, r, path[2])
 	}
+}
 
-
+func APIHandler(w http.ResponseWriter, r *http.Request) http.HandlerFunc {
+	switch r.Method {
+	case http.MethodGet:
+		return MakeAPIHandler(controllers.GetMovie)
+	case http.MethodPost:
+		return MakeAPIHandler(controllers.PostMovie)
+	case http.MethodPut:
+		//TODO: Make put controller
+		return nil
+	case http.MethodDelete:
+		//TODO: Make delete controller
+		return nil
+	default:
+		//TODO: give error message
+		return nil
+	}
 }
 
 
@@ -39,21 +53,8 @@ func main() {
 	//NO! We're not going to use it
 	// router := mux.NewRouter()
 
-	//Create instance of firebase app
-	firebaseApp, err := utils.InitFirebaseApp()
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	//Create a new client 
-	client, err := firebaseApp.Firestore(context.Background())
-	if err != nil {
-		log.Fatalln(err)
-	}
-	defer client.Close()
-
-
-	http.HandleFunc("/api/", app.JwtAuthentication(MakeAPIHandler(controllers.GetMovie)))
+	http.HandleFunc("/api/", app.JwtAuthentication(MakeAPIHandler(controllers.PostMovie)))
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 	
