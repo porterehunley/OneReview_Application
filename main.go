@@ -4,12 +4,13 @@ import (
 	"OneReview_Application/app"
 	"OneReview_Application/controllers"
 	// "fmt"
+	// "os"
 	"net/http"
 	"regexp"
 	"log"
 )
 
-var validMoviePath = regexp.MustCompile("^/(api)/(movies)/[a-zA-Z0-9]+$")
+var validMoviePath = regexp.MustCompile("^/(api)/(movies)/([a-zA-Z0-9]+)$")
 
 
 //Making a method to make the api handlers based on the url used
@@ -24,7 +25,7 @@ func MakeAPIHandler(fn func (http.ResponseWriter, *http.Request, string)) http.H
 			return
 		}
 
-		fn(w, r, path[2])
+		fn(w, r, path[3])
 	}
 }
 

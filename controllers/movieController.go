@@ -5,7 +5,7 @@ import (
 	"OneReview_Application/utils"
 	"net/http"
 	//"fmt"
-	//"encoding/json"
+	"encoding/json"
 )
 
 
@@ -32,30 +32,23 @@ func MovieController(w http.ResponseWriter, r *http.Request, title string) {
 }
 
 func getMovie(w http.ResponseWriter, r *http.Request, title string) {
-	newMovie := &models.Movie{} 
-	newMovie.Title = "testForAPIMUXOne"
-	newMovie.Score = "69"
-	newMovie.Date = "02/04/1999"
-
-	//Respond with JSON
-	response := utils.Message(true, "Movie found")
-	response["movie"] = newMovie
+	//handeling errors?
+	response := models.GrabMovies(title)
 	utils.Respond(w, response)
-
 }
 
 
-//TODO: Take actual data from a post request, right now this just creates a movie
 func postMovie(w http.ResponseWriter, r *http.Request) {
 	//Creating a movie to test firestore
 	//Interesting syntax here
-	newMovie := &models.Movie{} 
-	newMovie.Title = "testForAPIMUXOne"
-	newMovie.Score = "69"
-	newMovie.Date = "02/04/1999"
-
+	movie := &models.Movie{}
+	err := json.NewDecoder(r.Body).Decode(movie)
+	if err != nil {
+		utils.Respond(w, utils.Message(false, "Error while decoding request body"))
+		return
+	}
 	//Add movie to firestore
-	response := newMovie.Create()
+	response := movie.Create()
 
 	utils.Respond(w, response)
 }

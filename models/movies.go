@@ -25,7 +25,7 @@ type Movie struct {
 func (movie *Movie) Create() (map[string] interface{}) {
 	//I should probably figure out what values I just set to Nil
 	//Also what exactly is an interface? Why am I getting errors when I use toKeyValue??
-	_, _, err := GetDB().Collection("movies").Add(context.Background(), map[string]interface{}{
+	_, err := GetDB().Collection("movies").Doc(movie.Title).Set(context.Background(), map[string]interface{}{
         "title" : movie.Title, 
 		"score" : movie.Score,
 		"date" : movie.Date,
@@ -37,6 +37,19 @@ func (movie *Movie) Create() (map[string] interface{}) {
 	//Return a response on success
 	response := util.Message(true, "Movie has been created and stored")
 	response["movie"] = movie
+	return response
+}
+
+//Get (grab) the movies from firestore based from the title of the movie
+func GrabMovies(title string) (map[string] interface{}) {
+	dataSnap, err := GetDB().Collection("movies").Doc(title).Get(context.Background())
+	if err != nil {
+	    log.Fatalf("Failed grabbing movie: %v", err)
+	    return nil
+	}
+
+	response := util.Message(true, "Movie has been found")
+	response["movie"] = dataSnap.Data()
 	return response
 }
 
