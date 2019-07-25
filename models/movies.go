@@ -44,8 +44,9 @@ func (movie *Movie) Create() (map[string] interface{}) {
 func GrabMovies(title string) (map[string] interface{}) {
 	dataSnap, err := GetDB().Collection("movies").Doc(title).Get(context.Background())
 	if err != nil {
-	    log.Fatalf("Failed grabbing movie: %v", err)
-	    return nil
+	    log.Println("Failed grabbing movie: %v", err)
+	    response := util.Message(false, "Movie not found")
+	    return response
 	}
 
 	response := util.Message(true, "Movie has been found")
