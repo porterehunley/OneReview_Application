@@ -56,9 +56,20 @@ func GrabAllMovies() (map[string] interface{}) {
         }
         movies = append(movies, doc.Data())
 	}
-	
+
 	response := util.Message(true, "Movies have been found")
 	response["movies"] = movies
+	return response
+}
+
+func DeleteMovie(title string) (map[string] interface{}) {
+	_, err := GetDB().Collection("movies").Doc(title).Delete(context.Background())
+	if err != nil {
+		log.Printf("Error deleting movie: %s", err)
+		response := util.Message(false, "Failed to delete movie")
+	    return response
+	}
+	response := util.Message(true, "Movie has been deleted")
 	return response
 }
 

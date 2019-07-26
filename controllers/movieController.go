@@ -24,7 +24,7 @@ func MovieController(w http.ResponseWriter, r *http.Request, title string) {
 		return
 	case http.MethodDelete:
 		//TODO: Make delete controller
-
+		deleteMovie(w, r, title)
 		return 
 	default:
 		//TODO: give error message
@@ -44,8 +44,9 @@ func getMovie(w http.ResponseWriter, r *http.Request, title string) {
 	utils.Respond(w, response)
 }
 
-func deleteMovie(w http.ResponseWriter, r *http.Request) {
-	
+func deleteMovie(w http.ResponseWriter, r *http.Request, title string) {
+	response := models.DeleteMovie(title)
+	utils.Respond(w, response)
 }
 
 
