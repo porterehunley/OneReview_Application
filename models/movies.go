@@ -5,6 +5,7 @@ import (
 	"golang.org/x/net/context"
 	util "OneReview_Application/utils"
 	"log"
+	"google.golang.org/api/iterator"
 
 )
 //This contains information on the movies that we will be using 
@@ -40,17 +41,38 @@ func (movie *Movie) Create() (map[string] interface{}) {
 	return response
 }
 
+func GrabAllMovies() (map[string] interface{}) {
+	iter := GetDB().Collection("movies").Documents(context.Background())
+	var movies []map[string]interface{}
+
+	for true {
+        doc, err := iter.Next()
+        if err == iterator.Done {
+            break
+        }
+        if err != nil {
+            log.Println("Error getting all movies: ", err)
+            return nil
+        }
+        movies = append(movies, doc.Data())
+	}
+	
+	response := util.Message(true, "Movies have been found")
+	response["movies"] = movies
+	return response
+}
+
 //Get (grab) the movies from firestore based from the title of the movie
 func GrabMovies(title string) (map[string] interface{}) {
 	dataSnap, err := GetDB().Collection("movies").Doc(title).Get(context.Background())
 	if err != nil {
-	    log.Println("Failed grabbing movie: %v", err)
+	    log.Println("Failed grabbing movie: ", err)
 	    response := util.Message(false, "Movie not found")
 	    return response
 	}
 
 	response := util.Message(true, "Movie has been found")
-	response["movie"] = dataSnap.Data()
+	response["movies"] = dataSnap.Data()
 	return response
 }
 

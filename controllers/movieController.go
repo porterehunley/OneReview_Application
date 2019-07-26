@@ -19,10 +19,12 @@ func MovieController(w http.ResponseWriter, r *http.Request, title string) {
 		postMovie(w, r)
 		return
 	case http.MethodPut:
-		//TODO: Make put controller
+		//Post also overwrites the datat on firebase so it doesn't really matter
+		postMovie(w, r)
 		return
 	case http.MethodDelete:
 		//TODO: Make delete controller
+
 		return 
 	default:
 		//TODO: give error message
@@ -33,8 +35,17 @@ func MovieController(w http.ResponseWriter, r *http.Request, title string) {
 
 func getMovie(w http.ResponseWriter, r *http.Request, title string) {
 	//handeling errors?
+	if title == "all" {
+		response := models.GrabAllMovies()
+		utils.Respond(w, response)
+		return
+	}
 	response := models.GrabMovies(title)
 	utils.Respond(w, response)
+}
+
+func deleteMovie(w http.ResponseWriter, r *http.Request) {
+	
 }
 
 
