@@ -3,6 +3,7 @@ package main
 import (
 	"OneReview_Application/app"
 	"OneReview_Application/controllers"
+	"OneReview_Application/models"
 	// "fmt"
 	// "os"
 	"net/http"
@@ -35,6 +36,9 @@ func main() {
 	//It routes every single request to the server though that's pretty nice
 	//NO! We're not going to use it
 	// router := mux.NewRouter()
+
+	//Initialize the database
+	models.Init()
 
 
 	http.HandleFunc("/api/movies/", app.JwtAuthentication(MakeAPIHandler(controllers.MovieController)))

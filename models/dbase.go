@@ -18,14 +18,16 @@ var db *firestore.Client
 
 //Using defualt application credentials 
 //May need to ramp this up for server deployment
-func init() {
+func Init() {
 	//Load the .env 
+	//Might fail in deployment, but that's ok because it will get the variables from the container itself
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatalln("Error loading .env file")
+		log.Println("Error loading .env file: ", err)
 	}
-
-	opt := option.WithCredentialsFile(os.Getenv("GOOGLE_APPLICATION_CREDENTIALS"))
+	authPath := os.Getenv("GOOGLE_APPLICATION_CREDENTIALS")
+	//log.Println("Auth path: ", authPath)
+	opt := option.WithCredentialsFile(authPath)
 	app, err := firebase.NewApp(context.Background(), nil, opt)
 	if err != nil {
 		log.Fatalln(err)

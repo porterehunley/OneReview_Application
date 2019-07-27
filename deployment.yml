@@ -1,0 +1,46 @@
+---
+apiVersion: "v1"
+kind: "Namespace"
+metadata:
+  name: "namespace-one"
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "trbackend-one"
+  namespace: "namespace-one"
+  labels:
+    app: "trbackend-one"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "trbackend-one"
+  template:
+    metadata:
+      labels:
+        app: "trbackend-one"
+    spec:
+      containers:
+      - name: "trbackend-sha256"
+        image: "gcr.io/youtube-data-235117/trbackend@sha256:b37f2fb1d855805dd40722b86ee7ae6a1f4e1d8539eb57064d6dc8990c20979b"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "trbackend-one-hpa"
+  namespace: "namespace-one"
+  labels:
+    app: "trbackend-one"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "trbackend-one"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80
