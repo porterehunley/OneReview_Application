@@ -1,5 +1,7 @@
 FROM alpine:3.9
 
+RUN apk add --no-cache ca-certificates
+
 EXPOSE 8080
 
 ADD main /bin/main
