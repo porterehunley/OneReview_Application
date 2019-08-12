@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-//import $ from 'jquery';
+import $ from 'jquery';
 import Navbar from './navbar';
 import Deck from "./Movies/deck";
 import Popper from 'popper.js';
@@ -7,6 +7,36 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import './index.css';
+
+var moviesObj = [];
+
+var moviesProm = new Promise((resolve, reject) => {
+	let moviesList = [];
+	$.ajax({
+		url: 'https://cors-anywhere.herokuapp.com/http://truereview.network/api/movies/all',
+		crossDomain: true,
+		type: "GET",
+		dataType: "json",
+		success: function (result) {
+			const moviesJson = result.movies;
+			for (let i = 0; i < moviesJson.length; i++) {
+				moviesList.push(moviesJson[i]["title"]);
+			}
+			moviesList.forEach(function(item, index) {
+				let movie = new Object();
+				movie.id = index;
+				movie.header = "featured";
+				movie.title = item;
+				movie.body = "succ";
+				moviesObj.push(movie);
+			});
+			resolve('success');
+		},
+		error: function () {
+			resolve('error');
+		}
+	});
+});
 
 const movies = [{
 	id: 1,
@@ -63,19 +93,23 @@ class App extends Component {
 			<div>
 				<Navbar />
 				<div className="cardContainer">
-					<Deck movies={movies}/>
+					<Deck movies={moviesObj}/>
 				</div>
-			
 			</div>
 		);
 	}
-
 }
 
 
 //Render on the root div
-ReactDOM.render(
-	<App />,
-	document.getElementById('root')
-);
+moviesProm.then(function() {
+	console.log("succ");
+	ReactDOM.render(
+		<App />,
+		document.getElementById('root')
+	);
+}).catch(function() {
+	console.log("error");
+});
+
 
