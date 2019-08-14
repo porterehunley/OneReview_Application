@@ -19,15 +19,12 @@ var moviesProm = new Promise((resolve, reject) => {
 		dataType: "json",
 		success: function (result) {
 			const moviesJson = result.movies;
-			for (let i = 0; i < moviesJson.length; i++) {
-				moviesList.push(moviesJson[i]["title"]);
-			}
-			moviesList.forEach(function(item, index) {
+			moviesJson.forEach(function(item, index) {
 				let movie = new Object();
 				movie.id = index;
 				movie.header = "featured";
-				movie.title = item;
-				movie.body = "succ";
+				movie.title = item["title"];
+				movie.body = item["score"];
 				moviesObj.push(movie);
 			});
 			resolve('success');
@@ -58,7 +55,6 @@ class App extends Component {
 
 //Render on the root div
 moviesProm.then(function() {
-	console.log("succ");
 	ReactDOM.render(
 		<App />,
 		document.getElementById('root')
