@@ -25,6 +25,7 @@ var moviesProm = new Promise((resolve, reject) => {
 				movie.header = "featured";
 				movie.title = item["title"];
 				movie.body = item["score"];
+				movie.image = item["image"];
 				moviesObj.push(movie);
 			});
 			resolve('success');

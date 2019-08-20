@@ -9,7 +9,7 @@ function Movie(props) {
 			<div className="card-header">
 			  {props.header}
 			</div>
-		  <img className="card-img-top" src="https://m.media-amazon.com/images/M/MV5BMTU2NjA1ODgzMF5BMl5BanBnXkFtZTgwMTM2MTI4MjE@._V1_UX67_CR0,0,67,98_AL_.jpg" alt="Card image cap"></img>
+		  <img className="card-img-top" src={props.image} alt="Card image cap"></img>
 		  <div className="card-body">
 		    <h5 className="card-title">{props.title}</h5>
 		    <p className="card-text">{props.body}</p>

@@ -11,7 +11,8 @@ const Deck = ({movies}) => {
 		<Movie key={movie.id}
 			header={movie.header}
 			title={movie.title}
-			body={movie.body} />
+			body={movie.body} 
+			image={movie.image}/>
 	));
 
 	return (
