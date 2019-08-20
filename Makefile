@@ -1,6 +1,7 @@
 # This adds versioning by using the most recent commit 
 # Adds the versioning into the TAG shell variable
 # All this file is is a bunch of bash commands
+# $(GOOS) $(GOBUILD) -ldflags "-X main.version=$(TAG)" -o $(BINARY_NAME) .
 TAG?=$(shell git rev-list HEAD --max-count=1 --abbrev-commit)
 export TAG
 
