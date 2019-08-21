@@ -23,7 +23,7 @@ class Navbar extends Component {
               <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">How It Works</a>
+              <a className="nav-link" href="https://github.com/porterehunley/OneReview_Application">How It Works</a>
             </li>
             <li className="nav-item">
               <a className="nav-link disabled" href="#">Platforms</a>
