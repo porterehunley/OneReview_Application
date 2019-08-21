@@ -1,139 +1,65 @@
-# TrueReview backend Firestore Wrapper
+# Youtube Review Application 
 
-This application provides an API wrapper around firestore to manage authentication and the database itself. 
+This application creates a score for a movie from its response on YouTube. "Response" is a combination of the scores given by review videos, and how well those review videos were received.
 
-## API Calls
+## Backend Breakdown
 
-There are a number of supported opperations all connecting directly to firestore.
+This project is composed of three seperate applications running in paralell. The chart below should show how everything interacts.
 
-### GET Call
+![Backend Flowchart](https://i.ibb.co/2vsQKks/Screen-Shot-2019-08-21-at-12-03-30-PM.png)
 
-http://truereview.network/api/movies/title_here
+### Frontend App
 
-Response body if found 
+The front-end application is built using **React** and hosted on Google's App Engine. 
 
-```json
-{
-    "message": "Movie has been found",
-    "movies": {
-        "date": "02/04/1999",
-        "score": "88",
-        "title": "AuthMovie"
-    },
-    "status": true
-}
-```
+The design of the front-end app is centered around display; it handles almost no logic. All of the pcitures, titles, scores, are fetched from the Golang backend via a RESTful API. 
 
-If movie has not been found
+##### Frameworks Used
 
-```json
-{
-    "message": "Movie not found",
-    "status": false
-}
-```
+The front-end uses **Bootstrap** for style. It specifically makes use of the fantastic Bootstrap Cards.
 
-#### To get all movies
 
-http://truereview.network/api/movies/all
 
-```json
-{
-    "message": "Movies have been found",
-    "movies": [
-        {
-            "date": "02/04/1999",
-            "score": "88",
-            "title": "AuthMovie"
-        },
-        {
-            "date": "02/04/1999",
-            "score": "88",
-            "title": "MovieToDelete"
-        },
-        {
-            "date": "02/04/1999",
-            "score": "88",
-            "title": "MovieToDeleteTwo"
-        },
-        {
-            "date": "02/04/1999",
-            "score": "88",
-            "title": "PostMovie"
-        }
-    ],
-    "status": true
-}
-```
+### Backend for Frontend App
 
-### POST Call
+The backend for frontend is written in **Golang** and utilizes a **Kubernetes** deployment.
 
-http://truereview.network/api/movies/p
+This application is made to handle anything that the frontend might need. Some things include the collection of pcitures for the movies, serving pre-proccessed data like titles, scores, descriptions, etc.
 
-Unfortunately, there has to be some kind of string after '/movies/'
+The application also acts as a wrapper for the NoSQL Client database. This allows for other applications to communicate with the database via a RESTful API. 
 
-Posting must have a body of type 'application/json' and a body that matches the move:
+In the future, this application will handle user logins and authentication. 
 
-```json
-{
-	"title" : "MovieToDeleteTwo",
-	"score" : "88",
-	"date" : "02/04/1999"
-}
-```
+This application uses nothing outside of the standard Go library.
 
-A successful post will be responded with
 
-```json
-{
-    "message": "Movie has been created and stored",
-    "movie": {
-        "title": "MovieToDeleteTwo",
-        "score": "88",
-        "date": "02/04/1999"
-    },
-    "status": true
-}
-```
 
-### DELETE Call
+### Data-Side App
 
-http://truereview.network/api/movies/title_here
+The data-side application collects, cleans, and maintains the data nesscesary to develop the models used to determine review scores. 
 
-A DELETE will always respond with a successful message
+Here is an overview of the pipeline and application. 
 
-```json
-{
-    "message": "Movie has been deleted",
-    "status": true
-}
-```
+![Data Pipeline](https://i.ibb.co/MBgh5gS/Screen-Shot-2019-08-21-at-1-03-50-PM.png)
 
-## Deployment
+##### Deployment
 
-Deployed on a Kubernetes cluster managed by GKE
+This application uses **CircleCI** to package/deploy to the Python Package Index (PyPI). **Ansible** provisions and deploys the package to a linux server. 
 
-### Building
+##### GUI??
 
-```
-make build
-```
+Yes, there is a whole GUI for this side of the appliation which can be found [here](https://truereview.dev). If you are interested in seeing it in action, email me at porterhunley@gatech.edu and I will send you the credentials. 
 
-### Running 
+The GUI acts as an interface to the data collection process. It allows you to add/remove movies from the database. It also shows you which data might not be useful and needs to be looked at. In addition, it acts as an easy interface to manually input the "scores" for the video reviews.
 
-```
-make run
-```
+##### Frameworks Used
 
-### Deploying
+This app uses **Flask** for the back-end, and **JQuery** for the front.
 
-```
-make upload
-```
 
-### Calling
+### Is Everything Working??
 
-http://truereview.network/api/movies/
+Absolutely not. I am still honing in the model into something I would be comfortable deploying. In addition, the data-pipeline does not clean the data as well as it should. 
 
 
 

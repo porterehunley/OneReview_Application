@@ -13,7 +13,7 @@ function Movie(props) {
 		  <div className="card-body">
 		    <h5 className="card-title">{props.title}</h5>
 		    <p className="card-text">{props.body}</p>
-		    <a href="#" className="btn btn-primary">Movie Page</a>
+		    <a href="#" className="btn btn-primary disabled">Movie Page</a>
 		  </div>
 		</div>
 	);

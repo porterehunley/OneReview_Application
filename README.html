@@ -1055,106 +1055,32 @@ body .markdown-body
 .codehilite .vi{color:teal}
 .codehilite .il{color:#009999}
 .codehilite .gc{color:#999;background-color:#EAF2F5}
-</style><title>README</title></head><body><article class="markdown-body"><h1 id="truereview-backend-firestore-wrapper">TrueReview backend Firestore Wrapper<a class="headerlink" href="#truereview-backend-firestore-wrapper" title="Permanent link"></a></h1>
-<p>This application provides an API wrapper around firestore to manage authentication and the database itself. </p>
-<h2 id="api-calls">API Calls<a class="headerlink" href="#api-calls" title="Permanent link"></a></h2>
-<p>There are a number of supported opperations all connecting directly to firestore.</p>
-<h3 id="get-call">GET Call<a class="headerlink" href="#get-call" title="Permanent link"></a></h3>
-<p><a href="http://truereview.network/api/movies/title_here">http://truereview.network/api/movies/title_here</a></p>
-<p>Response body if found </p>
-<div class="codehilite"><pre><span class="p">{</span>
-    <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Movie has been found&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;movies&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;02/04/1999&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;score&quot;</span><span class="p">:</span> <span class="s2">&quot;88&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;AuthMovie&quot;</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="kc">true</span>
-<span class="p">}</span>
-</pre></div>
-
-<p>If movie has not been found</p>
-<div class="codehilite"><pre><span class="p">{</span>
-    <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Movie not found&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="kc">false</span>
-<span class="p">}</span>
-</pre></div>
-
-<h4 id="to-get-all-movies">To get all movies<a class="headerlink" href="#to-get-all-movies" title="Permanent link"></a></h4>
-<p><a href="http://truereview.network/api/movies/all">http://truereview.network/api/movies/all</a></p>
-<div class="codehilite"><pre><span class="p">{</span>
-    <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Movies have been found&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;movies&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;02/04/1999&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;score&quot;</span><span class="p">:</span> <span class="s2">&quot;88&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;AuthMovie&quot;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;02/04/1999&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;score&quot;</span><span class="p">:</span> <span class="s2">&quot;88&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;MovieToDelete&quot;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;02/04/1999&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;score&quot;</span><span class="p">:</span> <span class="s2">&quot;88&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;MovieToDeleteTwo&quot;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;02/04/1999&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;score&quot;</span><span class="p">:</span> <span class="s2">&quot;88&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PostMovie&quot;</span>
-        <span class="p">}</span>
-    <span class="p">],</span>
-    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="kc">true</span>
-<span class="p">}</span>
-</pre></div>
-
-<h3 id="post-call">POST Call<a class="headerlink" href="#post-call" title="Permanent link"></a></h3>
-<p><a href="http://truereview.network/api/movies/p">http://truereview.network/api/movies/p</a></p>
-<p>Unfortunately, there has to be some kind of string after &lsquo;/movies/&rsquo;</p>
-<p>Posting must have a body of type &lsquo;application/json&rsquo; and a body that matches the move:</p>
-<div class="codehilite"><pre><span class="p">{</span>
-    <span class="nt">&quot;title&quot;</span> <span class="p">:</span> <span class="s2">&quot;MovieToDeleteTwo&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;score&quot;</span> <span class="p">:</span> <span class="s2">&quot;88&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;date&quot;</span> <span class="p">:</span> <span class="s2">&quot;02/04/1999&quot;</span>
-<span class="p">}</span>
-</pre></div>
-
-<p>A successful post will be responded with</p>
-<div class="codehilite"><pre><span class="p">{</span>
-    <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Movie has been created and stored&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;movie&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;MovieToDeleteTwo&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;score&quot;</span><span class="p">:</span> <span class="s2">&quot;88&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;02/04/1999&quot;</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="kc">true</span>
-<span class="p">}</span>
-</pre></div>
-
-<h3 id="delete-call">DELETE Call<a class="headerlink" href="#delete-call" title="Permanent link"></a></h3>
-<p><a href="http://truereview.network/api/movies/title_here">http://truereview.network/api/movies/title_here</a></p>
-<p>A DELETE will always respond with a successful message</p>
-<div class="codehilite"><pre><span class="p">{</span>
-    <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Movie has been deleted&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="kc">true</span>
-<span class="p">}</span>
-</pre></div>
-
-<h2 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link"></a></h2>
-<p>Deployed on a Kubernetes cluster managed by GKE</p>
-<h3 id="building">Building<a class="headerlink" href="#building" title="Permanent link"></a></h3>
-<div class="codehilite"><pre>make build
-</pre></div>
-
-<h3 id="running">Running<a class="headerlink" href="#running" title="Permanent link"></a></h3>
-<div class="codehilite"><pre>make run
-</pre></div>
-
-<h3 id="deploying">Deploying<a class="headerlink" href="#deploying" title="Permanent link"></a></h3>
-<div class="codehilite"><pre>make upload
-</pre></div>
-
-<h3 id="calling">Calling<a class="headerlink" href="#calling" title="Permanent link"></a></h3>
-<p><a href="http://truereview.network/api/movies/">http://truereview.network/api/movies/</a></p></article></body></html>
+</style><title>README</title></head><body><article class="markdown-body"><h1 id="youtube-review-application">Youtube Review Application<a class="headerlink" href="#youtube-review-application" title="Permanent link"></a></h1>
+<p>This application creates a score for a movie from its response on YouTube. &ldquo;Response&rdquo; is a combination of the scores given by review videos, and how well those review videos were received.</p>
+<h2 id="backend-breakdown">Backend Breakdown<a class="headerlink" href="#backend-breakdown" title="Permanent link"></a></h2>
+<p>This project is composed of three seperate applications running in paralell. The chart below should show how everything interacts.</p>
+<p><img alt="Backend Flowchart" src="https://i.ibb.co/2vsQKks/Screen-Shot-2019-08-21-at-12-03-30-PM.png" /></p>
+<h3 id="frontend-app">Frontend App<a class="headerlink" href="#frontend-app" title="Permanent link"></a></h3>
+<p>The front-end application is built using <strong>React</strong> and hosted on Google&rsquo;s App Engine. </p>
+<p>The design of the front-end app is centered around display; it handles almost no logic. All of the pcitures, titles, scores, are fetched from the Golang backend via a RESTful API. </p>
+<h5 id="frameworks-used">Frameworks Used<a class="headerlink" href="#frameworks-used" title="Permanent link"></a></h5>
+<p>The front-end uses <strong>Bootstrap</strong> for style. It specifically makes use of the fantastic Bootstrap Cards.</p>
+<h3 id="backend-for-frontend-app">Backend for Frontend App<a class="headerlink" href="#backend-for-frontend-app" title="Permanent link"></a></h3>
+<p>The backend for frontend is written in <strong>Golang</strong> and utilizes a <strong>Kubernetes</strong> deployment.</p>
+<p>This application is made to handle anything that the frontend might need. Some things include the collection of pcitures for the movies, serving pre-proccessed data like titles, scores, descriptions, etc.</p>
+<p>The application also acts as a wrapper for the NoSQL Client database. This allows for other applications to communicate with the database via a RESTful API. </p>
+<p>In the future, this application will handle user logins and authentication. </p>
+<p>This application uses nothing outside of the standard Go library.</p>
+<h3 id="data-side-app">Data-Side App<a class="headerlink" href="#data-side-app" title="Permanent link"></a></h3>
+<p>The data-side application collects, cleans, and maintains the data nesscesary to develop the models used to determine review scores. </p>
+<p>Here is an overview of the pipeline and application. </p>
+<p><img alt="Data Pipeline" src="https://i.ibb.co/MBgh5gS/Screen-Shot-2019-08-21-at-1-03-50-PM.png" /></p>
+<h5 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link"></a></h5>
+<p>This application uses <strong>CircleCI</strong> to package/deploy to the Python Package Index (PyPI). <strong>Ansible</strong> provisions and deploys the package to a linux server. </p>
+<h5 id="gui">GUI??<a class="headerlink" href="#gui" title="Permanent link"></a></h5>
+<p>Yes, there is a whole GUI for this side of the appliation which can be found <a href="https://truereview.dev">here</a>. If you are interested in seeing it in action, email me at <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#111;&#114;&#116;&#101;&#114;&#104;&#117;&#110;&#108;&#101;&#121;&#64;&#103;&#97;&#116;&#101;&#99;&#104;&#46;&#101;&#100;&#117;">&#112;&#111;&#114;&#116;&#101;&#114;&#104;&#117;&#110;&#108;&#101;&#121;&#64;&#103;&#97;&#116;&#101;&#99;&#104;&#46;&#101;&#100;&#117;</a> and I will send you the credentials. </p>
+<p>The GUI acts as an interface to the data collection process. It allows you to add/remove movies from the database. It also shows you which data might not be useful and needs to be looked at. In addition, it acts as an easy interface to manually input the &ldquo;scores&rdquo; for the video reviews.</p>
+<h5 id="frameworks-used_1">Frameworks Used<a class="headerlink" href="#frameworks-used_1" title="Permanent link"></a></h5>
+<p>This app uses <strong>Flask</strong> for the back-end, and <strong>JQuery</strong> for the front.</p>
+<h3 id="is-everything-working">Is Everything Working??<a class="headerlink" href="#is-everything-working" title="Permanent link"></a></h3>
+<p>Absolutely not. I am still honing in the model into something I would be comfortable deploying. In addition, the data-pipeline does not clean the data as well as it should. </p></article></body></html>
