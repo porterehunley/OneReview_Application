@@ -26,7 +26,7 @@ class Navbar extends Component {
               <a className="nav-link" href="https://github.com/porterehunley/OneReview_Application">How It Works</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link disabled" href="https://truereview.dev">Data-Side Application</a>
+              <a className="nav-link" href="https://truereview.dev">Data-Side Application</a>
             </li>
           </ul>
           <form className="form-inline my-2 my-lg-0">
