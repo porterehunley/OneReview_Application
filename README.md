@@ -4,7 +4,7 @@ This application creates a score for a movie from its response on YouTube. "Resp
 
 ## Backend Breakdown
 
-This project is composed of three seperate applications running in paralell. The chart below should show how everything interacts.
+This project is composed of three seperate applications running in parallel. The chart below should show how everything interacts.
 
 ![Backend Flowchart](https://i.ibb.co/2vsQKks/Screen-Shot-2019-08-21-at-12-03-30-PM.png)
 
